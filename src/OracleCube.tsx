@@ -105,7 +105,7 @@ function Foreground({ input, setInput, showAnswer, answerText, onSend, onBack }:
         {!showAnswer && (<>
           <GlitchTitle text="Welcome to The Oracle Cube." />
           <p style={{ color:"var(--fg-dim)", textAlign:"center" }}>Ask your question. Type your message to the stars.</p>
-          <input value={input} onChange={(e)=>setInput(e.target.value)} placeholder="Type here…" style={{ width:"100%", background:"rgba(0,0,0,.4)", border:"1px solid rgba(255,255,255,.18)", borderRadius:10, padding:"12px 14px", outline:"none", color:"var(--fg)" }} />
+          <input value={input} onChange={(e)=>setInput(e.target.value)} placeholder="Type here…" style={{ width:"100%", background:"rgba(0,0,0,.4)", border:"1px solid rgba(255,255,255,.18)", borderRadius:10, padding:"12px 14px", outline:"none", color:"var(--fg)", fontSize:"16px", WebkitAppearance:"none", appearance:"none" }} />
           <div style={{ display:"grid", gridTemplateColumns:"1fr", gap:10, width:"100%" }}>
             <button className="btn glow" onClick={onSend}>
               <span className="glitch" style={{fontSize:18,fontWeight:800}}>
