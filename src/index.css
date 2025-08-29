@@ -45,7 +45,7 @@ input, textarea, select {
   width: 60vw;
   max-width: 300px;
   position: fixed;
-  top: 35%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1);
   z-index: 20;
