@@ -36,12 +36,12 @@ export default function BackgroundVideo({ videoId, isMobile }: BackgroundVideoPr
         ref={iframeRef}
         style={{
           position: 'absolute',
-          top: isMobile ? '-50%' : '-50%',
+          top: isMobile ? '-100%' : '-50%',
           left: isMobile ? '-50%' : '-50%',
-          width: isMobile ? '200%' : '200%',
-          height: isMobile ? '200%' : '200%',
+          width: isMobile ? '300%' : '200%',
+          height: isMobile ? '300%' : '200%',
           border: 'none',
-          filter: isMobile ? 'brightness(0.9) contrast(1.0)' : 'brightness(0.3) contrast(1.2)',
+          filter: isMobile ? 'brightness(1.0) contrast(1.0)' : 'brightness(0.3) contrast(1.2)',
           transform: 'scale(1)',
           pointerEvents: 'none',
           zIndex: 0
@@ -60,7 +60,7 @@ export default function BackgroundVideo({ videoId, isMobile }: BackgroundVideoPr
           width: '100%',
           height: '100%',
           background: isMobile 
-            ? 'radial-gradient(ellipse at 50% 50%, rgba(2, 6, 23, 0.08) 0%, rgba(0, 0, 0, 0.1) 60%)'
+            ? 'transparent'
             : 'radial-gradient(ellipse at 50% 50%, rgba(2, 6, 23, 0.7) 0%, rgba(0, 0, 0, 0.9) 60%)',
           zIndex: 1
         }}
