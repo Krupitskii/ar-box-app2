@@ -84,10 +84,10 @@ function Scene({ isMobile, showAnswer, sphereScale }: { isMobile:boolean; showAn
 function FontsAndGlitchCSS(){
   return (
     <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
       :root{ --fg:#e6e9f2; --fg-dim:rgba(226,232,240,.85) }
-      html,body{ font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; background:#000; }
-      .glitch{ position:relative; font-weight:900; font-size:28px; line-height:1.1; letter-spacing:-0.01em; text-align:center; color:var(--fg); text-shadow:0 2px 12px rgba(0,0,0,.6); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
+      html,body{ font-family:'Roboto',system-ui,-apple-system,Segoe UI,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; background:#000; }
+      .glitch{ position:relative; font-weight:900; font-size:28px; line-height:1.1; letter-spacing:-0.01em; text-align:center; color:var(--fg); text-shadow:0 2px 12px rgba(0,0,0,.6); font-family:'Roboto',system-ui,-apple-system,Segoe UI,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
       .btn .glitch{ color:#000 !important; }
       .btn .glitch span{ color:#000 !important; }
       .glitch span{ position:absolute; top:0; left:0; right:0; }
@@ -97,10 +97,10 @@ function FontsAndGlitchCSS(){
       @keyframes shiftR{ 0%{transform:translate(0,0)} 50%{transform:translate(-0.6px,0)} 100%{transform:translate(0,0)} }
       @keyframes shiftC{ 0%{transform:translate(0,0)} 50%{transform:translate(0.6px,0)} 100%{transform:translate(0,0)} }
       @keyframes glSlice{ 0%{clip-path:inset(0 0 80% 0);opacity:.85} 10%{clip-path:inset(10% 0 65% 0)} 20%{clip-path:inset(40% 0 40% 0)} 30%{clip-path:inset(65% 0 15% 0)} 40%{clip-path:inset(25% 0 55% 0)} 50%{clip-path:inset(5% 0 75% 0)} 60%{clip-path:inset(55% 0 25% 0)} 70%{clip-path:inset(35% 0 45% 0)} 80%{clip-path:inset(75% 0 5% 0)} 90%{clip-path:inset(20% 0 60% 0)} 100%{clip-path:inset(0 0 80% 0);opacity:.85} }
-      .btn{ background:#fff; color:#000; border:1px solid rgba(255,255,255,.3); border-radius:12px; padding:12px 16px; font-weight:800; box-shadow:0 0 0 1px rgba(0,0,0,.1) inset, 0 8px 40px rgba(0,0,0,.3); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
+      .btn{ background:#fff; color:#000; border:1px solid rgba(255,255,255,.3); border-radius:12px; padding:12px 16px; font-weight:800; box-shadow:0 0 0 1px rgba(0,0,0,.1) inset, 0 8px 40px rgba(0,0,0,.3); font-family:'Roboto',system-ui,-apple-system,Segoe UI,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
       .btn.glow{ box-shadow:0 0 0 1px rgba(0,0,0,.2) inset, 0 0 0 2px rgba(255,255,255,.3), 0 10px 50px rgba(0,0,0,.4); }
       .btn:disabled{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
-      .back{ position:relative; background:transparent; border:none; color:#cbd5e1; font-weight:700; cursor:pointer; font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
+      .back{ position:relative; background:transparent; border:none; color:#cbd5e1; font-weight:700; cursor:pointer; font-family:'Roboto',system-ui,-apple-system,Segoe UI,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
     `}</style>
   );
 }
@@ -123,7 +123,7 @@ function Foreground({ input, setInput, showAnswer, answerText, textVisible, isLo
         {!showAnswer && (<>
           <GlitchTitle text="Welcome to The Oracle Cube." />
           <p style={{ color:"var(--fg-dim)", textAlign:"center" }}>Ask your question. Type your message to the stars.</p>
-          <input value={input} onChange={(e)=>setInput(e.target.value)} placeholder="Type here…" style={{ width:"100%", background:"rgba(0,0,0,.4)", border:"1px solid rgba(255,255,255,.18)", borderRadius:10, padding:"12px 14px", outline:"none", color:"var(--fg)", fontSize:"16px", WebkitAppearance:"none", appearance:"none", fontFamily:"'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif" }} />
+          <input value={input} onChange={(e)=>setInput(e.target.value)} placeholder="Type here…" style={{ width:"100%", background:"rgba(0,0,0,.4)", border:"1px solid rgba(255,255,255,.18)", borderRadius:10, padding:"12px 14px", outline:"none", color:"var(--fg)", fontSize:"16px", WebkitAppearance:"none", appearance:"none", fontFamily:"'Roboto',system-ui,-apple-system,Segoe UI,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif" }} />
           <div style={{ display:"grid", gridTemplateColumns:"1fr", gap:10, width:"100%" }}>
             <button className={`btn ${input.trim() && !isLoading ? 'glow' : ''}`} onClick={onSend} disabled={!input.trim() || isLoading}>
               <span className="glitch" style={{fontSize:18,fontWeight:800}}>
