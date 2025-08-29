@@ -36,8 +36,8 @@ export default function BackgroundVideo({ videoId, isMobile }: BackgroundVideoPr
         ref={iframeRef}
         style={{
           position: 'absolute',
-          top: isMobile ? '-121.5%' : '-50%',
-          left: isMobile ? '-100%' : '-50%',
+          top: isMobile ? '-150%' : '-50%',
+          left: isMobile ? '-150%' : '-50%',
           width: isMobile ? '400%' : '200%',
           height: isMobile ? '400%' : '200%',
           border: 'none',
