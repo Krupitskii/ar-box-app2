@@ -41,16 +41,46 @@ input, textarea, select {
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1);
   opacity: 1;
+  text-align: center;
+  width: 100%;
 }
 
-.oracle-answer.entering {
-  transform: scale(0.8);
+.oracle-answer.hidden {
   opacity: 0;
+  transform: scale(0.8);
 }
 
-.oracle-answer.entered {
-  transform: scale(1);
+.oracle-answer.visible {
   opacity: 1;
+  transform: scale(1);
+  animation: strobeAppear 0.3s ease-out;
+}
+
+@keyframes strobeAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  40% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  80% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Плавная анимация для изменения позиционирования */

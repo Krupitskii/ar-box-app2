@@ -111,7 +111,7 @@ function GlitchTitle({ text }:{ text:string }){
   );
 }
 
-function Foreground({ input, setInput, showAnswer, answerText, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; onSend:()=>void; onBack:()=>void; }){
+function Foreground({ input, setInput, showAnswer, answerText, textVisible, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; textVisible:boolean; onSend:()=>void; onBack:()=>void; }){
   return (
     <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "center" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh" }}>
       <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center" }}>
@@ -134,7 +134,9 @@ function Foreground({ input, setInput, showAnswer, answerText, onSend, onBack }:
         </>)}
         {showAnswer && (
           <>
-            <GlitchTitle text={answerText || ""} />
+            <div className={`oracle-answer ${textVisible ? 'visible' : 'hidden'}`}>
+              <GlitchTitle text={answerText || ""} />
+            </div>
             <button className="back" onClick={onBack} aria-label="Back">← Back</button>
             <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:10, opacity:.8, textAlign:"center", color:"#cbd5e1", textDecoration:"none", marginTop:8 }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
           </>
@@ -149,6 +151,7 @@ export default function OracleCube(){
   const [showAnswer, setShowAnswer] = useState(false);
   const [answer, setAnswer] = useState<string|null>(null);
   const [sphereScale, setSphereScale] = useState(1);
+  const [textVisible, setTextVisible] = useState(false);
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   const phrases = useMemo(() => ([
@@ -208,11 +211,18 @@ export default function OracleCube(){
     const phrase = phrases[Math.floor(Math.random()*phrases.length)];
     setAnswer(phrase);
     setShowAnswer(true);
-    // Анимация увеличения сферы (уменьшенный масштаб)
-    setSphereScale(1.8);
+    setTextVisible(false);
+    // Анимация увеличения сферы (еще более уменьшенный масштаб)
+    setSphereScale(1.4);
+    
+    // Показываем текст после анимации сферы с задержкой
+    setTimeout(() => {
+      setTextVisible(true);
+    }, 800);
   };
   const onBack = () => { 
     setShowAnswer(false); 
+    setTextVisible(false);
     // Возвращаем сферу к исходному размеру
     setSphereScale(1);
   };
@@ -221,7 +231,7 @@ export default function OracleCube(){
     <div style={{ position:"fixed", inset:0, background:"radial-gradient(ellipse at 50% 50%, #020617 0%, #000 60%)" }}>
       <FontsAndGlitchCSS />
       <Scene isMobile={isMobile} showAnswer={showAnswer} sphereScale={sphereScale} />
-      <Foreground input={input} setInput={setInput} showAnswer={showAnswer} answerText={answer} onSend={onSend} onBack={onBack} />
+      <Foreground input={input} setInput={setInput} showAnswer={showAnswer} answerText={answer} textVisible={textVisible} onSend={onSend} onBack={onBack} />
     </div>
   );
 }
