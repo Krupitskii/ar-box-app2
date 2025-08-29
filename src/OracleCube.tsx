@@ -113,7 +113,7 @@ function GlitchTitle({ text }:{ text:string }){
 
 function Foreground({ input, setInput, showAnswer, answerText, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; onSend:()=>void; onBack:()=>void; }){
   return (
-    <div style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:"center", justifyContent:"center", color:"white" }}>
+    <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "center" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh" }}>
       <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center" }}>
         {!showAnswer && (<>
           <GlitchTitle text="Welcome to The Oracle Cube." />
@@ -208,8 +208,8 @@ export default function OracleCube(){
     const phrase = phrases[Math.floor(Math.random()*phrases.length)];
     setAnswer(phrase);
     setShowAnswer(true);
-    // Анимация увеличения сферы
-    setSphereScale(2.5);
+    // Анимация увеличения сферы (уменьшенный масштаб)
+    setSphereScale(1.8);
   };
   const onBack = () => { 
     setShowAnswer(false); 
