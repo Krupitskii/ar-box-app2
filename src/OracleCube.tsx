@@ -25,9 +25,11 @@ void main(){ vec3 p = position; vec3 sd = aSeed; float t = uTime; if(uPhase < 0.
 `;
 const FRAG = `precision mediump float; varying float vAlpha; void main(){ float d=distance(gl_PointCoord, vec2(0.5)); if(d>0.5) discard; vec3 col=vec3(0.85,0.86,0.95); gl_FragColor=vec4(col, vAlpha);} `;
 
-function Scene({ isMobile }: { isMobile:boolean }){
+function Scene({ isMobile, showAnswer, sphereScale }: { isMobile:boolean; showAnswer:boolean; sphereScale:number }){
   const mountRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const sphereRef = useRef<THREE.Mesh | null>(null);
+  
   useEffect(() => {
     const mount = mountRef.current!; const scene = new THREE.Scene();
     const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
@@ -49,6 +51,7 @@ function Scene({ isMobile }: { isMobile:boolean }){
     const cubeCam = new THREE.CubeCamera(0.1, 50, cubeRT); scene.add(cubeCam);
     const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.35, 128, 128), new THREE.MeshPhysicalMaterial({ metalness:1, roughness:0.07, reflectivity:1, clearcoat:1, clearcoatRoughness:0.1, envMap:cubeRT.texture, envMapIntensity:1.2 }));
     sphere.position.set(0, 2.6, 0); const baseScale = isMobile ? 1.25 : 1.0; (sphere.scale as any).setScalar(baseScale);
+    sphereRef.current = sphere;
     scene.add(sphere);
 
     const onResize = () => { const { w, h } = size(); renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); };
@@ -63,6 +66,16 @@ function Scene({ isMobile }: { isMobile:boolean }){
 
     return () => { if(rafRef.current) cancelAnimationFrame(rafRef.current); window.removeEventListener("resize", onResize); renderer.dispose(); geo.dispose(); mat.dispose(); (sphere.material as any).dispose?.(); scene.clear(); if(renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement); };
   }, [isMobile]);
+  
+  // Анимация сферы при изменении showAnswer
+  useEffect(() => {
+    if (sphereRef.current) {
+      const baseScale = isMobile ? 1.25 : 1.0;
+      const targetScale = showAnswer ? baseScale * sphereScale : baseScale;
+      sphereRef.current.scale.setScalar(targetScale);
+    }
+  }, [showAnswer, sphereScale, isMobile]);
+  
   return <div ref={mountRef} style={{ position:"fixed", inset:0, zIndex:0 }} />;
 }
 
@@ -100,7 +113,7 @@ function GlitchTitle({ text }:{ text:string }){
 
 function Foreground({ input, setInput, showAnswer, answerText, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; onSend:()=>void; onBack:()=>void; }){
   return (
-    <div style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:"flex-start", justifyContent:"center", color:"white", paddingTop:"48vh" }}>
+    <div style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:"center", justifyContent:"center", color:"white" }}>
       <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center" }}>
         {!showAnswer && (<>
           <GlitchTitle text="Welcome to The Oracle Cube." />
@@ -135,6 +148,7 @@ export default function OracleCube(){
   const [input, setInput] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
   const [answer, setAnswer] = useState<string|null>(null);
+  const [sphereScale, setSphereScale] = useState(1);
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   const phrases = useMemo(() => ([
@@ -194,13 +208,19 @@ export default function OracleCube(){
     const phrase = phrases[Math.floor(Math.random()*phrases.length)];
     setAnswer(phrase);
     setShowAnswer(true);
+    // Анимация увеличения сферы
+    setSphereScale(2.5);
   };
-  const onBack = () => { setShowAnswer(false); };
+  const onBack = () => { 
+    setShowAnswer(false); 
+    // Возвращаем сферу к исходному размеру
+    setSphereScale(1);
+  };
 
   return (
     <div style={{ position:"fixed", inset:0, background:"radial-gradient(ellipse at 50% 50%, #020617 0%, #000 60%)" }}>
       <FontsAndGlitchCSS />
-      <Scene isMobile={isMobile} />
+      <Scene isMobile={isMobile} showAnswer={showAnswer} sphereScale={sphereScale} />
       <Foreground input={input} setInput={setInput} showAnswer={showAnswer} answerText={answer} onSend={onSend} onBack={onBack} />
     </div>
   );

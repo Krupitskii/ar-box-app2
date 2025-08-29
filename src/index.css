@@ -35,3 +35,20 @@ input, textarea, select {
     text-size-adjust: none;
   }
 }
+
+/* Анимации для плавных переходов */
+.oracle-answer {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  opacity: 1;
+}
+
+.oracle-answer.entering {
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+.oracle-answer.entered {
+  transform: scale(1);
+  opacity: 1;
+}
