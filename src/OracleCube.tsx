@@ -113,7 +113,7 @@ function GlitchTitle({ text }:{ text:string }){
 
 function Foreground({ input, setInput, showAnswer, answerText, textVisible, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; textVisible:boolean; onSend:()=>void; onBack:()=>void; }){
   return (
-    <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "center" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh" }}>
+    <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "flex-end" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh", paddingBottom: showAnswer ? "15vh" : "0" }}>
       <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center", position: "relative" }}>
         {!showAnswer && (<>
           <GlitchTitle text="Welcome to The Oracle Cube." />
