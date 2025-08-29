@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { getOracleResponse } from "./api";
 
 const VERT = `
 uniform float uTime; uniform float uPhase; attribute vec3 aSeed; varying float vAlpha;
@@ -112,7 +113,7 @@ function GlitchTitle({ text }:{ text:string }){
   );
 }
 
-function Foreground({ input, setInput, showAnswer, answerText, textVisible, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; textVisible:boolean; onSend:()=>void; onBack:()=>void; }){
+function Foreground({ input, setInput, showAnswer, answerText, textVisible, isLoading, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; textVisible:boolean; isLoading:boolean; onSend:()=>void; onBack:()=>void; }){
   return (
     <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "flex-end" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh", paddingBottom: showAnswer ? "15vh" : "0" }}>
       <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center", position: "relative" }}>
@@ -121,12 +122,12 @@ function Foreground({ input, setInput, showAnswer, answerText, textVisible, onSe
           <p style={{ color:"var(--fg-dim)", textAlign:"center" }}>Ask your question. Type your message to the stars.</p>
           <input value={input} onChange={(e)=>setInput(e.target.value)} placeholder="Type here…" style={{ width:"100%", background:"rgba(0,0,0,.4)", border:"1px solid rgba(255,255,255,.18)", borderRadius:10, padding:"12px 14px", outline:"none", color:"var(--fg)", fontSize:"16px", WebkitAppearance:"none", appearance:"none", fontFamily:"'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif" }} />
           <div style={{ display:"grid", gridTemplateColumns:"1fr", gap:10, width:"100%" }}>
-            <button className={`btn ${input.trim() ? 'glow' : ''}`} onClick={onSend} disabled={!input.trim()}>
+            <button className={`btn ${input.trim() && !isLoading ? 'glow' : ''}`} onClick={onSend} disabled={!input.trim() || isLoading}>
               <span className="glitch" style={{fontSize:18,fontWeight:800}}>
-                <span className="r" aria-hidden>Ask for answer</span>
-                <span className="c" aria-hidden>Ask for answer</span>
-                <span className="slice" aria-hidden>Ask for answer</span>
-                Ask for answer
+                <span className="r" aria-hidden>{isLoading ? 'Consulting...' : 'Ask for answer'}</span>
+                <span className="c" aria-hidden>{isLoading ? 'Consulting...' : 'Ask for answer'}</span>
+                <span className="slice" aria-hidden>{isLoading ? 'Consulting...' : 'Ask for answer'}</span>
+                {isLoading ? 'Consulting...' : 'Ask for answer'}
               </span>
             </button>
           </div>
@@ -153,74 +154,45 @@ export default function OracleCube(){
   const [answer, setAnswer] = useState<string|null>(null);
   const [sphereScale, setSphereScale] = useState(1);
   const [textVisible, setTextVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  const phrases = useMemo(() => ([
-    "Kill your ego.",
-    "You are not your thoughts.",
-    "Everything you seek is already inside.",
-    "Time is an illusion.",
-    "The reflection is the reality.",
-    "Let go",
-    "Nothing changes until you do.",
-    "You are the question and the answer.",
-    "Love is the only frequency.",
-    "I see you",
-    "Breathe.",
-    "Expand.",
-    "Awaken.",
-    "Surrender.",
-    "Remember.",
-    "Heal.",
-    "Reflect.",
-    "Listen.",
-    "Flow.",
-    "Love.",
-    "You are fine.",
-    "Reboot your heart.",
-    "Who are you without your story?",
-    "You were always the answer.",
-    "You are becoming.",
-    "Transformation is messy—so are you.",
-    "Endings are portals.",
-    "Trust the process",
-    "Die a little, live a lot.",
-    "Shed what no longer fits.",
-    "The answer is always love.",
-    "You are already loved.",
-    "Choose love over fear.",
-    "Your future is buffering…",
-    "You came here for a selfie, but left with your soul.",
-    "Warning: May cause transformation.",
-    "This is not content, this is you.",
-    "Someone is looking at you right now.",
-    "Your karma has been delivered.",
-    "Artificial? Or just art ?",
-    "It’s not magic.",
-    "You are the algorithm.",
-    "This oracle runs on your energy.",
-    "Don’t worship the oracle",
-    "Human Made.",
-    "Try again later.",
-    "yes",
-    "no",
-    "you already know.",
-    "In another timeline, you are here too."
-  ]), []);
-
-  const onSend = () => {
-    const phrase = phrases[Math.floor(Math.random()*phrases.length)];
-    setAnswer(phrase);
+  const onSend = async () => {
+    if (!input.trim()) return;
+    
+    setIsLoading(true);
     setShowAnswer(true);
     setTextVisible(false);
-    // Анимация увеличения сферы (еще более уменьшенный масштаб)
     setSphereScale(1.4);
     
-    // Показываем текст после анимации сферы с задержкой
-    setTimeout(() => {
-      setTextVisible(true);
-    }, 800);
+    try {
+      const aiResponse = await getOracleResponse(input.trim());
+      setAnswer(aiResponse);
+      
+      // Показываем текст после анимации сферы с задержкой
+      setTimeout(() => {
+        setTextVisible(true);
+      }, 800);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      // Fallback to random response on error
+      const fallbackPhrases = [
+        "You are not your thoughts.",
+        "Breathe.",
+        "Trust the process",
+        "You are fine.",
+        "Try again later."
+      ];
+      setAnswer(fallbackPhrases[Math.floor(Math.random() * fallbackPhrases.length)]);
+      
+      setTimeout(() => {
+        setTextVisible(true);
+      }, 800);
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
   const onBack = () => { 
     setShowAnswer(false); 
     setTextVisible(false);
@@ -232,7 +204,7 @@ export default function OracleCube(){
     <div style={{ position:"fixed", inset:0, background:"radial-gradient(ellipse at 50% 50%, #020617 0%, #000 60%)" }}>
       <FontsAndGlitchCSS />
       <Scene isMobile={isMobile} showAnswer={showAnswer} sphereScale={sphereScale} />
-      <Foreground input={input} setInput={setInput} showAnswer={showAnswer} answerText={answer} textVisible={textVisible} onSend={onSend} onBack={onBack} />
+      <Foreground input={input} setInput={setInput} showAnswer={showAnswer} answerText={answer} textVisible={textVisible} isLoading={isLoading} onSend={onSend} onBack={onBack} />
     </div>
   );
 }
