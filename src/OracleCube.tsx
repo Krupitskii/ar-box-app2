@@ -113,8 +113,8 @@ function GlitchTitle({ text }:{ text:string }){
 
 function Foreground({ input, setInput, showAnswer, answerText, textVisible, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; textVisible:boolean; onSend:()=>void; onBack:()=>void; }){
   return (
-    <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "center" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh" }}>
-      <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center" }}>
+    <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "stretch" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh", flexDirection: showAnswer ? "column" : "row" }}>
+      <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center", position: "relative", height: showAnswer ? "100%" : "auto" }}>
         {!showAnswer && (<>
           <GlitchTitle text="Welcome to The Oracle Cube." />
           <p style={{ color:"var(--fg-dim)", textAlign:"center" }}>Ask your question. Type your message to the stars.</p>
@@ -137,8 +137,10 @@ function Foreground({ input, setInput, showAnswer, answerText, textVisible, onSe
             <div className={`oracle-answer ${textVisible ? 'visible' : 'hidden'}`}>
               <GlitchTitle text={answerText || ""} />
             </div>
-            <button className="back" onClick={onBack} aria-label="Back">← Back</button>
-            <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:10, opacity:.8, textAlign:"center", color:"#cbd5e1", textDecoration:"none", marginTop:8 }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
+            <div style={{ marginTop: "auto", paddingBottom: "20px" }}>
+              <button className="back" onClick={onBack} aria-label="Back">← Back</button>
+              <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:10, opacity:.8, textAlign:"center", color:"#cbd5e1", textDecoration:"none", marginTop:8, display:"block" }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
+            </div>
           </>
         )}
       </div>
