@@ -95,8 +95,8 @@ function FontsAndGlitchCSS(){
       @keyframes shiftR{ 0%{transform:translate(0,0)} 50%{transform:translate(-0.6px,0)} 100%{transform:translate(0,0)} }
       @keyframes shiftC{ 0%{transform:translate(0,0)} 50%{transform:translate(0.6px,0)} 100%{transform:translate(0,0)} }
       @keyframes glSlice{ 0%{clip-path:inset(0 0 80% 0);opacity:.85} 10%{clip-path:inset(10% 0 65% 0)} 20%{clip-path:inset(40% 0 40% 0)} 30%{clip-path:inset(65% 0 15% 0)} 40%{clip-path:inset(25% 0 55% 0)} 50%{clip-path:inset(5% 0 75% 0)} 60%{clip-path:inset(55% 0 25% 0)} 70%{clip-path:inset(35% 0 45% 0)} 80%{clip-path:inset(75% 0 5% 0)} 90%{clip-path:inset(20% 0 60% 0)} 100%{clip-path:inset(0 0 80% 0);opacity:.85} }
-      .btn{ background:rgba(0,0,0,.6); color:#fff; border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:12px 16px; font-weight:800; box-shadow:0 0 0 1px rgba(255,255,255,.06) inset, 0 8px 40px rgba(0,0,0,.45); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
-      .btn.glow{ box-shadow:0 0 0 1px rgba(255,255,255,.1) inset, 0 0 0 2px rgba(255,255,255,.06), 0 10px 50px rgba(0,0,0,.5); }
+      .btn{ background:#000; color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:12px; padding:12px 16px; font-weight:800; box-shadow:0 0 0 1px rgba(255,255,255,.1) inset, 0 8px 40px rgba(0,0,0,.6); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
+      .btn.glow{ box-shadow:0 0 0 1px rgba(255,255,255,.2) inset, 0 0 0 2px rgba(255,255,255,.1), 0 10px 50px rgba(0,0,0,.7); }
       .btn:disabled{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
       .back{ position:relative; background:transparent; border:none; color:#cbd5e1; font-weight:700; cursor:pointer; font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
     `}</style>
@@ -133,7 +133,13 @@ function Foreground({ input, setInput, showAnswer, answerText, textVisible, isLo
             </button>
           </div>
           <div style={{ fontSize:10, color:"rgba(148,163,184,.9)", textAlign:"center" }}>Anonymous. No data saved without consent.</div>
-          <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:10, opacity:.8, textAlign:"center", color:"#cbd5e1", textDecoration:"none" }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
+          <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:12, textAlign:"center", color:"#fff", textDecoration:"none", background:"rgba(0,0,0,0.8)", padding:"8px 16px", borderRadius:"8px", border:"1px solid rgba(255,255,255,0.2)", fontWeight:"600" }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
+          <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:12, textAlign:"center", color:"#fff", textDecoration:"none", background:"rgba(0,0,0,0.8)", padding:"8px 16px", borderRadius:"8px", border:"1px solid rgba(255,255,255,0.2)", fontWeight:"600", display:"flex", alignItems:"center", gap:"8px", justifyContent:"center" }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Follow us on Instagram
+          </a>
         </>)}
         {showAnswer && (
           <>
@@ -141,7 +147,13 @@ function Foreground({ input, setInput, showAnswer, answerText, textVisible, isLo
               <GlitchTitle text={answerText || ""} />
             </div>
             <button className="back" onClick={onBack} aria-label="Back">← Back</button>
-            <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:10, opacity:.8, textAlign:"center", color:"#cbd5e1", textDecoration:"none", marginTop:8 }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
+            <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:12, textAlign:"center", color:"#fff", textDecoration:"none", background:"rgba(0,0,0,0.8)", padding:"8px 16px", borderRadius:"8px", border:"1px solid rgba(255,255,255,0.2)", fontWeight:"600", marginTop:8 }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
+            <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:12, textAlign:"center", color:"#fff", textDecoration:"none", background:"rgba(0,0,0,0.8)", padding:"8px 16px", borderRadius:"8px", border:"1px solid rgba(255,255,255,0.2)", fontWeight:"600", display:"flex", alignItems:"center", gap:"8px", justifyContent:"center", marginTop:8 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              Follow us on Instagram
+            </a>
           </>
         )}
       </div>
