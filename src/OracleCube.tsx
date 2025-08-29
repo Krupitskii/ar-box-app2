@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { getOracleResponse } from "./api";
+import BackgroundVideo from "./BackgroundVideo";
 
 const VERT = `
 uniform float uTime; uniform float uPhase; attribute vec3 aSeed; varying float vAlpha;
@@ -201,7 +202,8 @@ export default function OracleCube(){
   };
 
   return (
-    <div style={{ position:"fixed", inset:0, background:"radial-gradient(ellipse at 50% 50%, #020617 0%, #000 60%)" }}>
+    <div style={{ position:"fixed", inset:0 }}>
+      <BackgroundVideo videoId="GvYH3ZidOwY" isMobile={isMobile} />
       <FontsAndGlitchCSS />
       <Scene isMobile={isMobile} showAnswer={showAnswer} sphereScale={sphereScale} />
       <Foreground input={input} setInput={setInput} showAnswer={showAnswer} answerText={answer} textVisible={textVisible} isLoading={isLoading} onSend={onSend} onBack={onBack} />
