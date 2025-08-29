@@ -95,8 +95,8 @@ function FontsAndGlitchCSS(){
       @keyframes shiftR{ 0%{transform:translate(0,0)} 50%{transform:translate(-0.6px,0)} 100%{transform:translate(0,0)} }
       @keyframes shiftC{ 0%{transform:translate(0,0)} 50%{transform:translate(0.6px,0)} 100%{transform:translate(0,0)} }
       @keyframes glSlice{ 0%{clip-path:inset(0 0 80% 0);opacity:.85} 10%{clip-path:inset(10% 0 65% 0)} 20%{clip-path:inset(40% 0 40% 0)} 30%{clip-path:inset(65% 0 15% 0)} 40%{clip-path:inset(25% 0 55% 0)} 50%{clip-path:inset(5% 0 75% 0)} 60%{clip-path:inset(55% 0 25% 0)} 70%{clip-path:inset(35% 0 45% 0)} 80%{clip-path:inset(75% 0 5% 0)} 90%{clip-path:inset(20% 0 60% 0)} 100%{clip-path:inset(0 0 80% 0);opacity:.85} }
-      .btn{ background:#000; color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:12px; padding:12px 16px; font-weight:800; box-shadow:0 0 0 1px rgba(255,255,255,.1) inset, 0 8px 40px rgba(0,0,0,.6); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
-      .btn.glow{ box-shadow:0 0 0 1px rgba(255,255,255,.2) inset, 0 0 0 2px rgba(255,255,255,.1), 0 10px 50px rgba(0,0,0,.7); }
+      .btn{ background:#fff; color:#000; border:1px solid rgba(255,255,255,.3); border-radius:12px; padding:12px 16px; font-weight:800; box-shadow:0 0 0 1px rgba(0,0,0,.1) inset, 0 8px 40px rgba(0,0,0,.3); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
+      .btn.glow{ box-shadow:0 0 0 1px rgba(0,0,0,.2) inset, 0 0 0 2px rgba(255,255,255,.3), 0 10px 50px rgba(0,0,0,.4); }
       .btn:disabled{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
       .back{ position:relative; background:transparent; border:none; color:#cbd5e1; font-weight:700; cursor:pointer; font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif; }
     `}</style>
@@ -116,7 +116,7 @@ function GlitchTitle({ text }:{ text:string }){
 
 function Foreground({ input, setInput, showAnswer, answerText, textVisible, isLoading, onSend, onBack }:{ input:string; setInput:(v:string)=>void; showAnswer:boolean; answerText:string|null; textVisible:boolean; isLoading:boolean; onSend:()=>void; onBack:()=>void; }){
   return (
-    <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "flex-end" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "48vh", paddingBottom: showAnswer ? "15vh" : "0" }}>
+    <div className="foreground-container" style={{ position:"fixed", inset:0, zIndex:10, display:"flex", alignItems:showAnswer ? "flex-end" : "flex-start", justifyContent:"center", color:"white", paddingTop:showAnswer ? "0" : "40vh", paddingBottom: showAnswer ? "15vh" : "0" }}>
       <div style={{ width:"88vw", maxWidth:420, display:"flex", flexDirection:"column", gap:16, alignItems:"center", position: "relative" }}>
         {!showAnswer && (<>
           <GlitchTitle text="Welcome to The Oracle Cube." />
