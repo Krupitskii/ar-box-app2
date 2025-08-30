@@ -10,6 +10,7 @@
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "firebase": "^12.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.158.0"
@@ -24,7 +25,14 @@
     "vite": "^5.0.0"
   },
   "homepage": "https://krupitskii.github.io/ar-box-app2",
-  "keywords": ["react", "three.js", "3d", "oracle", "festival", "arc"],
+  "keywords": [
+    "react",
+    "three.js",
+    "3d",
+    "oracle",
+    "festival",
+    "arc"
+  ],
   "author": "The Vessel",
   "license": "MIT"
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { getOracleResponse } from "./api";
+import { saveOracleResponse } from "./firebase";
 import BackgroundVideo from "./BackgroundVideo";
 
 const VERT = `
@@ -134,7 +135,7 @@ function Foreground({ input, setInput, showAnswer, answerText, textVisible, isLo
               </span>
             </button>
           </div>
-          <div style={{ fontSize:10, color:"rgba(148,163,184,.9)", textAlign:"center" }}>Anonymous. No data saved without consent.</div>
+          <div style={{ fontSize:10, color:"rgba(148,163,184,.9)", textAlign:"center" }}>Responses are saved anonymously for analytics.</div>
           <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:12, textAlign:"center", color:"#fff", textDecoration:"none", background:"rgba(0,0,0,0.8)", padding:"8px 16px", borderRadius:"8px", border:"1px solid rgba(255,255,255,0.2)", fontWeight:"600" }}>The Oracle Cube — ARC 2025 · By The Vessel</a>
           <a href="https://www.instagram.com/vesselvibe" target="_blank" rel="noopener noreferrer" style={{ fontSize:12, textAlign:"center", color:"#fff", textDecoration:"none", padding:"8px 16px", fontWeight:"600", display:"flex", alignItems:"center", gap:"8px", justifyContent:"center" }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -184,6 +185,9 @@ export default function OracleCube(){
       const aiResponse = await getOracleResponse(input.trim());
       setAnswer(aiResponse);
       
+      // Сохраняем ответ в Firebase
+      await saveOracleResponse(input.trim(), aiResponse);
+      
       // Показываем текст после анимации сферы с задержкой
       setTimeout(() => {
         setTextVisible(true);
@@ -198,7 +202,11 @@ export default function OracleCube(){
         "You are fine.",
         "Try again later."
       ];
-      setAnswer(fallbackPhrases[Math.floor(Math.random() * fallbackPhrases.length)]);
+      const fallbackResponse = fallbackPhrases[Math.floor(Math.random() * fallbackPhrases.length)];
+      setAnswer(fallbackResponse);
+      
+      // Сохраняем fallback ответ в Firebase
+      await saveOracleResponse(input.trim(), fallbackResponse);
       
       setTimeout(() => {
         setTextVisible(true);
