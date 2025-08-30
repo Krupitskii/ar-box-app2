@@ -165,6 +165,8 @@ function Foreground({ input, setInput, showAnswer, answerText, textVisible, isLo
 }
 
 export default function OracleCube(){
+  console.log("OracleCube component initialized");
+  
   const [input, setInput] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
   const [answer, setAnswer] = useState<string|null>(null);
@@ -172,17 +174,23 @@ export default function OracleCube(){
   const [textVisible, setTextVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  
+  console.log("Mobile detection:", isMobile);
 
   const onSend = async () => {
+    console.log("onSend function called with input:", input);
     if (!input.trim()) return;
     
+    console.log("Starting Oracle response process...");
     setIsLoading(true);
     setShowAnswer(true);
     setTextVisible(false);
     setSphereScale(1.4);
     
     try {
+      console.log("Calling getOracleResponse...");
       const aiResponse = await getOracleResponse(input.trim());
+      console.log("AI Response received:", aiResponse);
       setAnswer(aiResponse);
       
       // Сохраняем ответ в Firebase
@@ -205,6 +213,7 @@ export default function OracleCube(){
         "Try again later."
       ];
       const fallbackResponse = fallbackPhrases[Math.floor(Math.random() * fallbackPhrases.length)];
+      console.log("Using fallback response:", fallbackResponse);
       setAnswer(fallbackResponse);
       
       // Сохраняем fallback ответ в Firebase
@@ -217,6 +226,7 @@ export default function OracleCube(){
       }, 800);
     } finally {
       setIsLoading(false);
+      console.log("Oracle response process completed");
     }
   };
   
