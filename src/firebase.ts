@@ -14,8 +14,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+console.log("Initializing Firebase with config:", firebaseConfig);
 const app = initializeApp(firebaseConfig);
+console.log("Firebase app initialized:", app);
 const db = getFirestore(app);
+console.log("Firestore database initialized:", db);
 
 // Interface for Oracle response data
 export interface OracleResponse {
@@ -28,6 +31,10 @@ export interface OracleResponse {
 
 // Function to save Oracle response to Firestore
 export async function saveOracleResponse(userQuestion: string, aiResponse: string): Promise<void> {
+  console.log("Starting to save Oracle response to Firebase...");
+  console.log("User question:", userQuestion);
+  console.log("AI response:", aiResponse);
+  
   try {
     const responseData: OracleResponse = {
       userQuestion,
@@ -37,10 +44,18 @@ export async function saveOracleResponse(userQuestion: string, aiResponse: strin
       sessionId: generateSessionId()
     };
 
-    await addDoc(collection(db, "oracle_responses"), responseData);
-    console.log("Oracle response saved to Firebase");
+    console.log("Response data prepared:", responseData);
+    console.log("Firebase db instance:", db);
+    
+    const docRef = await addDoc(collection(db, "oracle_responses"), responseData);
+    console.log("Oracle response saved to Firebase with ID:", docRef.id);
   } catch (error) {
     console.error("Error saving to Firebase:", error);
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
     // Don't throw error to avoid breaking the user experience
   }
 }

@@ -1,0 +1,15 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Разрешаем все операции для коллекции oracle_responses
+    match /oracle_responses/{document} {
+      allow read, write: if true;
+    }
+    
+    // Блокируем все остальные операции
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

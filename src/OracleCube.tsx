@@ -186,7 +186,9 @@ export default function OracleCube(){
       setAnswer(aiResponse);
       
       // Сохраняем ответ в Firebase
+      console.log("About to save response to Firebase...");
       await saveOracleResponse(input.trim(), aiResponse);
+      console.log("Firebase save completed");
       
       // Показываем текст после анимации сферы с задержкой
       setTimeout(() => {
@@ -206,7 +208,9 @@ export default function OracleCube(){
       setAnswer(fallbackResponse);
       
       // Сохраняем fallback ответ в Firebase
+      console.log("About to save fallback response to Firebase...");
       await saveOracleResponse(input.trim(), fallbackResponse);
+      console.log("Firebase fallback save completed");
       
       setTimeout(() => {
         setTextVisible(true);
